@@ -1,7 +1,9 @@
 package org.example.instructionSet
 
-class SkipEqual: InstructionStrategy {
-    override fun execute() {
+import org.example.Cpu
+
+class SkipEqual: Instruction {
+    override fun execute(cpu: Cpu, firstByte: String, secondByte: String) {
         TODO("Not yet implemented")
     }
 }

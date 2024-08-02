@@ -1,7 +1,9 @@
 package org.example.instructionSet
 
-class Write: InstructionStrategy {
-    override fun execute() {
+import org.example.Cpu
+
+class Write: Instruction {
+    override fun execute(cpu: Cpu, firstByte: String, secondByte: String) {
         TODO("Not yet implemented")
     }
 }

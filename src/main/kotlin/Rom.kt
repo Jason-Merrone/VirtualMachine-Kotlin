@@ -1,8 +1,9 @@
 package org.example
 
 import java.io.File
+import kotlin.system.exitProcess
 
-class Rom: Memory() {
+class Rom(): Memory() {
     private val memorySize = 4000
     private val memory: ByteArray = ByteArray(memorySize)
 
@@ -14,11 +15,13 @@ class Rom: Memory() {
             val bytes = File(filePath).readBytes()
             if (bytes.size > memorySize) {
                 throw IllegalArgumentException("ROM image is too large (Max: $memorySize bytes)")
+                exitProcess(403)
             }
             // Copy loaded bytes into memory
             bytes.copyInto(memory)
         } catch (e: Exception) {
             println("Error loading ROM: ${e.message}")
+            exitProcess(404)
         }
     }
 

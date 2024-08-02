@@ -13,15 +13,16 @@ class InstructionFactory {
         "7" to SwitchMemory(),
         "8" to SkipEqual(),
         "9" to SkipNotEqual(),
-        "A" to SetA(),
-        "B" to SetT(),
-        "C" to ReadT(),
-        "D" to ConvertToBaseTen(),
-        "E" to ConvertByteToAscii(),
-        "F" to Draw()
+        "a" to SetA(),
+        "b" to SetT(),
+        "c" to ReadT(),
+        "d" to ConvertToBaseTen(),
+        "e" to ConvertByteToAscii(),
+        "f" to Draw()
     )
 
-    fun createInstruction(){
-
+    fun createInstruction(instructionAddress:String): Instruction? {
+        println("letter $instructionAddress")
+        return instructionSet[instructionAddress]
     }
 }

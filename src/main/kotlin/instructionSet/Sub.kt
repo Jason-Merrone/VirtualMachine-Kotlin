@@ -1,7 +1,15 @@
 package org.example.instructionSet
 
-class Sub: InstructionStrategy {
-    override fun execute() {
-        TODO("Not yet implemented")
+import org.example.Cpu
+
+class Sub: Instruction {
+    @OptIn(ExperimentalUnsignedTypes::class)
+    override fun execute(cpu: Cpu, firstByte: String, secondByte: String) {
+        val registerIndex2 = firstByte[1].digitToIntOrNull(16) ?: throw IllegalArgumentException("Invalid register index in instruction")
+        val registerIndex1 = secondByte[0].digitToIntOrNull(16) ?: throw IllegalArgumentException("Invalid register index in instruction")
+        val registerIndex3 = secondByte[1].digitToIntOrNull(16) ?: throw IllegalArgumentException("Invalid register index in instruction")
+        val difference = cpu.registers[registerIndex1] - cpu.registers[registerIndex2]
+        cpu.registers[registerIndex3] = difference.toUByte()
+        cpu.incrementCount(2u)
     }
 }

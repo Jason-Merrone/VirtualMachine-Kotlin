@@ -1,8 +1,9 @@
 package org.example
 
-class Computer {
-    val cpu = Cpu()
-    val ram = Ram()
-    private val screen = Screen()
+object Computer {
     val rom = Rom()
+    val ram = Ram()
+    val screen = Screen()
+    val cpu = Cpu(ram)
+
 }
