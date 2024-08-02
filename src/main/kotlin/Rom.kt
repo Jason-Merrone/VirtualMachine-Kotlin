@@ -15,20 +15,18 @@ class Rom(): Memory() {
             val bytes = File(filePath).readBytes()
             if (bytes.size > memorySize) {
                 throw IllegalArgumentException("ROM image is too large (Max: $memorySize bytes)")
-                exitProcess(403)
             }
             // Copy loaded bytes into memory
             bytes.copyInto(memory)
         } catch (e: Exception) {
-            println("Error loading ROM: ${e.message}")
-            exitProcess(404)
+            throw IllegalArgumentException("Error loading ROM: ${e.message}")
         }
         Computer.cpu.startExecution()
     }
 
 
     override fun storeByte(address: Int, value: Byte) {
-        memory[address] = value
+        throw IllegalArgumentException("Error this cartridge does not support write operations")
     }
 
     override fun getByte(address: Int): Byte = memory[address]

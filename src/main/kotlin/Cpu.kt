@@ -9,17 +9,12 @@ import kotlin.system.exitProcess
 class Cpu() {
 
     val registers = UByteArray(8)
-    var programCounter = UByteArray(2)
+    var programCounter:UShort = 0u
     var timer = ByteArray(1) {0}
     var address:UShort = 0u
     var memoryFlag = 0
 
     private var timerTicks = 0
-
-    init{
-        programCounter[0] = 0u
-        programCounter[1] = 1u
-    }
 
     private val executor = Executors.newSingleThreadScheduledExecutor()
 
@@ -38,9 +33,9 @@ class Cpu() {
     }
 
     fun incrementCount(amount:UInt){
-        programCounter[0] = (programCounter[0] + amount).toUByte()
-        programCounter[1] = (programCounter[1] + amount).toUByte()
+        programCounter = (programCounter + amount).toUShort()
     }
+
     fun decrementTimer() {
         timerTicks++
         if(timerTicks >= 8){
@@ -54,8 +49,14 @@ class Cpu() {
     @OptIn(ExperimentalStdlibApi::class)
     fun executeInstruction(){
         // Gets binary from rom and converts to HexString
-        val instructionText = listOf(Computer.rom.getByte(programCounter[0].toInt()).toHexString(),
-                                     Computer.rom.getByte(programCounter[1].toInt()).toHexString())
+        val instructionText = listOf(Computer.rom.getByte(programCounter.toInt()).toHexString(),
+                                     Computer.rom.getByte(programCounter.toInt()+1).toHexString())
+
+        // Terminates the program if instruction is 0000
+        if(instructionText[0] == "00" &&instructionText[1] == "00") {
+            exitProcess(0)
+        }
+
         // Create the correct instruction from instruction factory via the first hex digit
         val instruction = InstructionFactory().createInstruction(instructionText[0].filterNot { it.isWhitespace() }.toList()[0].toString())
 

@@ -2,6 +2,7 @@ import org.example.Computer
 import org.example.instructionSet.InstructionFactory
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 
 class InstructionTests {
@@ -79,8 +80,39 @@ class InstructionTests {
         val cpu = Computer.cpu
         cpu.memoryFlag = 1
         cpu.address = 0u
-        rom.storeByte(0,52)
         InstructionFactory().createInstruction("3").execute(cpu, "30", "00")
-        assertEquals(52u, cpu.registers[0])
+        assertEquals(0u, cpu.registers[0])
+    }
+
+    @OptIn(ExperimentalUnsignedTypes::class)
+    @Test
+    fun testWriteRam(){
+        val ram = Computer.ram
+        val cpu = Computer.cpu
+        cpu.memoryFlag = 0
+        cpu.address = 0u
+        cpu.registers[0] = 5u
+        InstructionFactory().createInstruction("4").execute(cpu, "40", "00")
+        assertEquals(5, ram.getByte(0))
+    }
+
+    @OptIn(ExperimentalUnsignedTypes::class)
+    @Test
+    fun testWriteRom(){
+        val cpu = Computer.cpu
+        cpu.memoryFlag = 1
+        cpu.address = 0u
+        cpu.registers[0] = 5u
+        assertThrows<IllegalArgumentException>("Error this cartridge does not support write operations") {
+            InstructionFactory().createInstruction("4").execute(cpu, "40", "00")
+        }
+    }
+
+    @OptIn(ExperimentalUnsignedTypes::class)
+    @Test
+    fun testJump(){
+        val cpu = Computer.cpu
+        InstructionFactory().createInstruction("5").execute(cpu, "51", "50")
+        assertEquals(150u,cpu.programCounter)
     }
 }
