@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 
+@OptIn(ExperimentalUnsignedTypes::class)
 class InstructionTests {
 
     @BeforeEach
@@ -12,7 +13,6 @@ class InstructionTests {
         Computer.reset()
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     @Test
     fun testAdd() {
         val cpu = Computer.cpu
@@ -22,7 +22,6 @@ class InstructionTests {
         assertEquals(9u, cpu.registers[2])
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     @Test
     fun testSub() {
         val cpu = Computer.cpu
@@ -32,7 +31,6 @@ class InstructionTests {
         assertEquals(1u, cpu.registers[2])
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     @Test
     fun testConvertToBase10(){
         val ram = Computer.ram
@@ -45,7 +43,6 @@ class InstructionTests {
         assertEquals(8, ram.getByte(2))
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     @Test
     fun testSetA(){
         val cpu = Computer.cpu
@@ -53,7 +50,6 @@ class InstructionTests {
         assertEquals(255u, cpu.address)
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     @Test
     fun testStore(){
         val cpu = Computer.cpu
@@ -61,7 +57,6 @@ class InstructionTests {
         assertEquals(55u, cpu.registers[0])
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     @Test
     fun testReadRam(){
         val ram = Computer.ram
@@ -73,7 +68,6 @@ class InstructionTests {
         assertEquals(52u, cpu.registers[0])
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     @Test
     fun testReadRom(){
         val rom = Computer.rom
@@ -84,7 +78,6 @@ class InstructionTests {
         assertEquals(0u, cpu.registers[0])
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     @Test
     fun testWriteRam(){
         val ram = Computer.ram
@@ -95,8 +88,7 @@ class InstructionTests {
         InstructionFactory().createInstruction("4").execute(cpu, "40", "00")
         assertEquals(5, ram.getByte(0))
     }
-
-    @OptIn(ExperimentalUnsignedTypes::class)
+    
     @Test
     fun testWriteRom(){
         val cpu = Computer.cpu
@@ -108,11 +100,20 @@ class InstructionTests {
         }
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     @Test
     fun testJump(){
         val cpu = Computer.cpu
         InstructionFactory().createInstruction("5").execute(cpu, "51", "50")
         assertEquals(150u,cpu.programCounter)
+    }
+
+    @Test
+    fun testSwitchMemory(){
+        val cpu = Computer.cpu
+        cpu.memoryFlag = 2
+        InstructionFactory().createInstruction("7").execute(cpu, "70", "00")
+        assertEquals(0,cpu.memoryFlag)
+        InstructionFactory().createInstruction("7").execute(cpu, "70", "00")
+        assertEquals(1,cpu.memoryFlag)
     }
 }
