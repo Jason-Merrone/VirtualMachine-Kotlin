@@ -1,5 +1,6 @@
 package org.example.instructionSet
 
+import org.example.Computer
 import org.example.Cpu
 
 class ConvertToBaseTen: Instruction {
@@ -14,9 +15,9 @@ class ConvertToBaseTen: Instruction {
 
         val addressRegisterValue = cpu.address.toInt()
 
-        cpu.ram.storeByte(addressRegisterValue,hundredsDigit.toByte())
-        cpu.ram.storeByte(addressRegisterValue+1,tensDigit.toByte())
-        cpu.ram.storeByte(addressRegisterValue+2,onesDigit.toByte())
+        Computer.ram.storeByte(addressRegisterValue,hundredsDigit.toByte())
+        Computer.ram.storeByte(addressRegisterValue+1,tensDigit.toByte())
+        Computer.ram.storeByte(addressRegisterValue+2,onesDigit.toByte())
 
         cpu.incrementCount(2u)
     }

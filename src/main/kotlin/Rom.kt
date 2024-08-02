@@ -7,7 +7,7 @@ class Rom(): Memory() {
     private val memorySize = 4000
     private val memory: ByteArray = ByteArray(memorySize)
 
-    init{
+    fun loadCartridge(){
         println("Type in the path to the ROM file")
         val filePath = readln()
 
@@ -23,7 +23,9 @@ class Rom(): Memory() {
             println("Error loading ROM: ${e.message}")
             exitProcess(404)
         }
+        Computer.cpu.startExecution()
     }
+
 
     override fun storeByte(address: Int, value: Byte) {
         memory[address] = value

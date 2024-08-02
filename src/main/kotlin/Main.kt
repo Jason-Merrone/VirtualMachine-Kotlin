@@ -1,5 +1,5 @@
 package org.example
 
 fun main() {
-    Computer
+    Computer.rom.loadCartridge()
 }

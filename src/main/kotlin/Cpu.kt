@@ -6,8 +6,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.system.exitProcess
 
 @OptIn(ExperimentalUnsignedTypes::class)
-class Cpu(ram:Ram) {
-    val ram = ram
+class Cpu() {
 
     val registers = UByteArray(8)
     var programCounter = UByteArray(2)
@@ -29,12 +28,14 @@ class Cpu(ram:Ram) {
         decrementTimer()
     }
 
-    private var clockFuture = executor.scheduleAtFixedRate(
-        runnable,
-        0,
-        2, // 2ms for 500Hz
-        TimeUnit.MILLISECONDS
-    )
+    fun startExecution(){
+        var clockFuture = executor.scheduleAtFixedRate(
+            runnable,
+            0,
+            2, // 2ms for 500Hz
+            TimeUnit.MILLISECONDS
+        )
+    }
 
     fun incrementCount(amount:UInt){
         programCounter[0] = (programCounter[0] + amount).toUByte()
@@ -56,7 +57,7 @@ class Cpu(ram:Ram) {
         val instructionText = listOf(Computer.rom.getByte(programCounter[0].toInt()).toHexString(),
                                      Computer.rom.getByte(programCounter[1].toInt()).toHexString())
         // Create the correct instruction from instruction factory via the first hex digit
-        val instruction = InstructionFactory().createInstruction(instructionText[0].filterNot { it.isWhitespace() }.toList()[0].toString()) ?: exitProcess(0) // Exit if null
+        val instruction = InstructionFactory().createInstruction(instructionText[0].filterNot { it.isWhitespace() }.toList()[0].toString())
 
         instruction.execute(this,instructionText[0],instructionText[1])
         println("test ${registers[0]},${registers[1]}")

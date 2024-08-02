@@ -1,5 +1,7 @@
 package org.example.instructionSet
 
+import kotlin.system.exitProcess
+
 
 class InstructionFactory {
     val instructionSet = mapOf(
@@ -21,8 +23,8 @@ class InstructionFactory {
         "f" to Draw()
     )
 
-    fun createInstruction(instructionAddress:String): Instruction? {
+    fun createInstruction(instructionAddress:String): Instruction {
         println("letter $instructionAddress")
-        return instructionSet[instructionAddress]
+        return instructionSet[instructionAddress]?: exitProcess(0)
     }
 }

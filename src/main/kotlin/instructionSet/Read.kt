@@ -9,7 +9,7 @@ class Read: Instruction {
         val registerIndex = firstByte[1].digitToIntOrNull(16) ?: throw IllegalArgumentException("Invalid register index in instruction")
         val memoryAddress = cpu.address.toInt()
         if(cpu.memoryFlag == 0)
-            cpu.registers[registerIndex] = cpu.ram.getByte( memoryAddress ).toUByte()
+            cpu.registers[registerIndex] = Computer.ram.getByte( memoryAddress ).toUByte()
         else
             cpu.registers[registerIndex] = Computer.rom.getByte( memoryAddress ).toUByte()
         cpu.incrementCount(2u)
