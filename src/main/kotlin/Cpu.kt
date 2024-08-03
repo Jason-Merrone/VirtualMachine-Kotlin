@@ -10,7 +10,7 @@ class Cpu() {
 
     val registers = UByteArray(8)
     var programCounter:UShort = 0u
-    var timer = ByteArray(1) {0}
+    var timer:UByte = 0u
     var address:UShort = 0u
     var memoryFlag = 0
 
@@ -32,16 +32,16 @@ class Cpu() {
         )
     }
 
-    fun incrementCount(amount:UInt){
-        programCounter = (programCounter + amount).toUShort()
+    fun incrementCount(amount:Int){
+        programCounter = (programCounter + amount.toUShort()).toUShort()
     }
 
-    fun decrementTimer() {
+    private fun decrementTimer() {
         timerTicks++
         if(timerTicks >= 8){
             timerTicks = 0
-            if(timer[0] > 0){
-                timer[0]--
+            if(timer > 0u){
+                timer--
             }
         }
     }
@@ -61,6 +61,5 @@ class Cpu() {
         val instruction = InstructionFactory().createInstruction(instructionText[0].filterNot { it.isWhitespace() }.toList()[0].toString())
 
         instruction.execute(this,instructionText[0],instructionText[1])
-        println("test ${registers[0]},${registers[1]}")
     }
 }

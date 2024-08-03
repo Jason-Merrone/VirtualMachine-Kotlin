@@ -27,7 +27,7 @@ class InstructionTests {
         val cpu = Computer.cpu
         cpu.registers[0] = 5u
         cpu.registers[1] = 4u
-        InstructionFactory().createInstruction("2").execute(cpu, "21", "02")
+        InstructionFactory().createInstruction("2").execute(cpu, "20", "12")
         assertEquals(1u, cpu.registers[2])
     }
 
@@ -35,26 +35,26 @@ class InstructionTests {
     fun testConvertToBase10(){
         val ram = Computer.ram
         val cpu = Computer.cpu
-        cpu.registers[0] = 128u
+        cpu.registers[0] = 127.toUByte()
         cpu.address = 0u
-        InstructionFactory().createInstruction("d")?.execute(cpu, "d0", "00")
-        assertEquals(1, ram.getByte(0))
-        assertEquals(2, ram.getByte(1))
-        assertEquals(8, ram.getByte(2))
+        InstructionFactory().createInstruction("d").execute(cpu, "d0", "00")
+        assertEquals(1u, ram.getByte(0))
+        assertEquals(2u, ram.getByte(1))
+        assertEquals(7u, ram.getByte(2))
     }
 
     @Test
     fun testSetA(){
         val cpu = Computer.cpu
-        InstructionFactory().createInstruction("a")?.execute(cpu, "a2", "55")
-        assertEquals(255u, cpu.address)
+        InstructionFactory().createInstruction("a").execute(cpu, "a2", "55")
+        assertEquals(597u, cpu.address)
     }
 
     @Test
     fun testStore(){
         val cpu = Computer.cpu
-        InstructionFactory().createInstruction("0")?.execute(cpu, "00", "55")
-        assertEquals(55u, cpu.registers[0])
+        InstructionFactory().createInstruction("0").execute(cpu, "00", "A5")
+        assertEquals(165u, cpu.registers[0])
     }
 
     @Test
@@ -63,7 +63,7 @@ class InstructionTests {
         val cpu = Computer.cpu
         cpu.memoryFlag = 0
         cpu.address = 0u
-        ram.storeByte(0,52)
+        ram.storeByte(0,52u)
         InstructionFactory().createInstruction("3").execute(cpu, "30", "00")
         assertEquals(52u, cpu.registers[0])
     }
@@ -86,9 +86,9 @@ class InstructionTests {
         cpu.address = 0u
         cpu.registers[0] = 5u
         InstructionFactory().createInstruction("4").execute(cpu, "40", "00")
-        assertEquals(5, ram.getByte(0))
+        assertEquals(5u, ram.getByte(0))
     }
-    
+
     @Test
     fun testWriteRom(){
         val cpu = Computer.cpu

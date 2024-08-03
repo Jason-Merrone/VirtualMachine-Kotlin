@@ -24,7 +24,6 @@ class InstructionFactory {
     )
 
     fun createInstruction(instructionAddress:String): Instruction {
-        println("letter $instructionAddress")
         return instructionSet[instructionAddress]?: exitProcess(0)
     }
 }

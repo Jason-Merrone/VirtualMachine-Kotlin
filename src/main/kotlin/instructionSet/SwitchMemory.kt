@@ -9,6 +9,6 @@ class SwitchMemory: Instruction {
     )
     override fun execute(cpu: Cpu, firstByte: String, secondByte: String) {
         cpu.memoryFlag = memoryState[cpu.memoryFlag] ?: 0 // If memoryFlag is not 0 or 1, it is set to 0
-        cpu.incrementCount(2u)
+        cpu.incrementCount(2)
     }
 }

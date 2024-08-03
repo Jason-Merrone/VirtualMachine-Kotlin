@@ -1,11 +1,10 @@
 package org.example
 
 import java.io.File
-import kotlin.system.exitProcess
-
+@OptIn(ExperimentalUnsignedTypes::class)
 class Rom(): Memory() {
     private val memorySize = 4000
-    private val memory: ByteArray = ByteArray(memorySize)
+    private val memory: UByteArray = UByteArray(memorySize)
 
     fun loadCartridge(){
         println("Type in the path to the ROM file")
@@ -17,7 +16,7 @@ class Rom(): Memory() {
                 throw IllegalArgumentException("ROM image is too large (Max: $memorySize bytes)")
             }
             // Copy loaded bytes into memory
-            bytes.copyInto(memory)
+            bytes.toUByteArray().copyInto(memory)
         } catch (e: Exception) {
             throw IllegalArgumentException("Error loading ROM: ${e.message}")
         }
@@ -25,10 +24,10 @@ class Rom(): Memory() {
     }
 
 
-    override fun storeByte(address: Int, value: Byte) {
+    override fun storeByte(address: Int, value: UByte) {
         throw IllegalArgumentException("Error this cartridge does not support write operations")
     }
 
-    override fun getByte(address: Int): Byte = memory[address]
+    override fun getByte(address: Int): UByte = memory[address]
 
 }

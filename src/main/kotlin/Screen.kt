@@ -1,13 +1,7 @@
 package org.example
 
 class Screen {
-    private val memory = mutableListOf<Byte>()
-
-    init{
-        for(i in 0 until 64){
-            memory.add(0.toByte())
-        }
-    }
+    private val memory = mutableListOf<UByte>()
 
     private val binaryToAsciiMap = mapOf(
         "0" to '\u0000', // NUL - Null
@@ -140,7 +134,13 @@ class Screen {
         "1111111" to '\u007F'  // DEL - Delete
     )
 
-    fun display(){
+    init{
+        for(i in 0 until 64){
+            memory.add(0.toUByte())
+        }
+    }
+
+    fun refreshDisplay(){
         println("========")
         for(i in 0 until 64 step 8){
             for(j in 0 until 8){
@@ -151,7 +151,8 @@ class Screen {
         }
     }
 
-    fun changeDisplayedCharacter(address:Int, value:Byte){
+    fun changeDisplayedCharacter(address: Int, value: UByte) {
         memory[address] = value
+        refreshDisplay()
     }
 }

@@ -10,6 +10,6 @@ class Add: Instruction{
         val registerIndex3 = secondByte[1].digitToIntOrNull(16) ?: throw IllegalArgumentException("Invalid register index in instruction")
         val sum = cpu.registers[registerIndex1] + cpu.registers[registerIndex2]
         cpu.registers[registerIndex3] = sum.toUByte()
-        cpu.incrementCount(2u)
+        cpu.incrementCount(2)
     }
 }

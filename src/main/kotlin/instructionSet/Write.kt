@@ -9,9 +9,9 @@ class Write: Instruction {
         val registerIndex = firstByte[1].digitToIntOrNull(16) ?: throw IllegalArgumentException("Invalid register index in instruction")
         val memoryAddress = cpu.address.toInt()
         if(cpu.memoryFlag == 0)
-            Computer.ram.storeByte(memoryAddress,cpu.registers[registerIndex].toByte())
+            Computer.ram.storeByte(memoryAddress,cpu.registers[registerIndex].toUByte())
         else
-            Computer.rom.storeByte(memoryAddress,cpu.registers[registerIndex].toByte())
-        cpu.incrementCount(2u)
+            Computer.rom.storeByte(memoryAddress,cpu.registers[registerIndex].toUByte())
+        cpu.incrementCount(2)
     }
 }

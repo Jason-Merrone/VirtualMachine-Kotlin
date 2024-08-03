@@ -13,11 +13,11 @@ class ReadKeyboard: Instruction {
 
         val validInput = userInput.take(2).filter { it in '0'..'9' || it in 'A'..'F' }
 
-        cpu.registers[registerIndex] = if (validInput.isNotEmpty()) {
+        cpu.registers[registerIndex] = (if (validInput.isNotEmpty()) {
             validInput.toInt(16).toUByte()
         } else {
-            0u
-        }
-        cpu.incrementCount(2u)
+            0
+        }) as UByte
+        cpu.incrementCount(2)
     }
 }

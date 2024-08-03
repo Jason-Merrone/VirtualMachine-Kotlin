@@ -12,6 +12,6 @@ class Read: Instruction {
             cpu.registers[registerIndex] = Computer.ram.getByte( memoryAddress ).toUByte()
         else
             cpu.registers[registerIndex] = Computer.rom.getByte( memoryAddress ).toUByte()
-        cpu.incrementCount(2u)
+        cpu.incrementCount(2)
     }
 }
