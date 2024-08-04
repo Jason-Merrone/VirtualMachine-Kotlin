@@ -1,0 +1,266 @@
+034F #Sets r3 to ascii value for "X"
+0458 #Sets r4 to ascii value for "X"
+0031 #Store starting grid values in memory
+A000
+4000
+0032
+A001
+4000
+0033
+A002
+4000
+0034
+A003
+4000
+0035
+A004
+4000
+0036
+A005
+4000
+0037
+A006
+4000
+0038
+A007
+4000
+0039
+A008
+4000
+A000 #Displays grid
+3000
+F000
+A001 #
+3000
+F001
+A002 #
+3000
+F002
+A003 #
+3000
+F010
+A004 #
+3000
+F011
+A005 #
+3000
+F012
+A006 #
+3000
+F020
+A007 #
+3000
+F021
+A008 #
+3000
+F022
+5108 #Jump to win condition logic
+8340 # 3 /= 4(X)
+5100 #set 3 to "X"
+5104 #Set 3 to "O"
+6100 #Grab user input and store in r1
+0201 #Store value 1 in r2
+9120 #Skips next line if r1 and r2 are not equal
+50B2
+0202 #Store value 2 in r2
+9120 #Skips next line if r1 and r2 are not equal
+50BA
+0203 #Store value 3 in r2
+9120 #Skips next line if r1 and r2 are not equal
+50C2
+0204 #Store value 4 in r2
+9120 #Skips next line if r1 and r2 are not equal
+50CA
+0205 #Store value 5 in r2
+9120 #Skips next line if r1 and r2 are not equal
+50D2
+0206 #Store value 6 in r2
+9120 #Skips next line if r1 and r2 are not equal
+50DA
+0207 #Store value 7 in r2
+9120 #Skips next line if r1 and r2 are not equal
+50E2
+0208 #Store value 8 in r2
+9120 #Skips next line if r1 and r2 are not equal
+50EA
+0209 #Store value 9 in r2
+9120 #Skips next line if r1 and r2 are not equal
+50F2
+5078 #Jumps back to user input if initial input was invalid
+A000 #logic for grid space 1
+3500 #sets r5 to value at A in memory
+0631 #Sets r6 to 1 in ascii
+50F8
+A001 #logic for grid space 2
+3500 #sets r5 to value at A in memory
+0632 #Sets r6 to 2 in ascii
+50F8
+A002 #logic for grid space 3
+3500 #sets r5 to value at A in memory
+0633 #Sets r6 to 3 in ascii
+50F8
+A003 #logic for grid space 4
+3500 #sets r5 to value at A in memory
+0634 #Sets r6 to 4 in ascii
+50F8
+A004 #logic for grid space 5
+3500 #sets r5 to value at A in memory
+0635 #Sets r6 to 5 in ascii
+50F8
+A005 #logic for grid space 6
+3500 #sets r5 to value at A in memory
+0636 #Sets r6 to 6 in ascii
+50F8
+A006 #logic for grid space 7
+3500 #sets r5 to value at A in memory
+0637 #Sets r6 to 7 in ascii
+50F8
+A007 #logic for grid space 8
+3500 #sets r5 to value at A in memory
+0638 #Sets r6 to 8 in ascii
+50F8
+A008 #logic for grid space 9
+3500 #sets r5 to value at A in memory
+0639 #Sets r6 to 9 in ascii
+8560 # Shared grid space logic - this line jumps back to user input if grid space already occupied
+5078 #5078
+4300 #Sets value at A in memory to r3
+503A #Jump to display logic
+0358 #logic for setting "X"
+5078 #Jump back
+034F #logic for setting "O"
+5078 #Jump back
+A000 # Win condition logic - starting with row 1 check
+3000
+A001
+3100
+A002
+3200
+8010
+511E #Jump to next
+8210
+511E #Jump to next
+5212 #Jump to program end
+A003 # Row 2 check
+3000
+A004
+3100
+A005
+3200
+8010
+5134 #Jump to next
+8210
+5134 #Jump to next
+5212 #Jump to program end
+A006 # Row 3 check
+3000
+A007
+3100
+A008
+3200
+8010
+514A #Jump to next
+8210
+514A #Jump to next
+5212 #Jump to program end
+A000 # Column 1 check
+3000
+A003
+3100
+A006
+3200
+8010
+5160 #Jump to next
+8210
+5160 #Jump to next
+5212 #Jump to program end
+A001 # Column 2 check
+3000
+A004
+3100
+A007
+3200
+8010
+5176 #Jump to next
+8210
+5176 #Jump to next
+5212 #Jump to program end
+A002 # Column 3 check
+3000
+A005
+3100
+A008
+3200
+8010
+518C #Jump to next
+8210
+518C #Jump to next
+5212 #Jump to program end
+A000 # Diagonal left to right check
+3000
+A004
+3100
+A008
+3200
+8010
+51A2 #Jump to next
+8210
+51A2 #Jump to next
+5212 #Jump to program end
+A002 # Diagonal right to left check
+3000
+A004
+3100
+A006
+3200
+8010
+51B8 #Jump to next
+8210
+51B8 #Jump to next
+5212 #Jump to program end
+A000 #Draw check (index 1)
+0131
+3200
+9120
+5072 #Jump to next round
+A001 #Draw check (index 2)
+0132
+3200
+9120
+5072 #Jump to next round
+A002 #Draw check (index 3)
+0133
+3200
+9120
+5072 #Jump to next round
+A003 #Draw check (index 4)
+0134
+3200
+9120
+5072 #Jump to next round
+A004 #Draw check (index 5)
+0135
+3200
+9120
+5072 #Jump to next round
+A005 #Draw check (index 6)
+0136
+3200
+9120
+5072 #Jump to next round
+A006 #Draw check (index 7)
+0137
+3200
+9120
+5072 #Jump to next round
+A007 #Draw check (index 8)
+0138
+3200
+9120
+5072 #Jump to next round
+A008 #Draw check (index 9)
+0139
+3200
+9120
+5072 #Jump to next round
+0000 # Jump here to terminate the program Hex: 212
