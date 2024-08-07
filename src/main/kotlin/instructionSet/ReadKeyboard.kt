@@ -1,11 +1,10 @@
 package org.example.instructionSet
-
 import org.example.Cpu
 import java.util.*
 
-class ReadKeyboard: Instruction {
+class ReadKeyboard: Instruction() {
     @OptIn(ExperimentalUnsignedTypes::class)
-    override fun execute(cpu: Cpu, firstByte: String, secondByte: String) {
+    override fun performOperation(cpu: Cpu, firstByte: String, secondByte: String) {
         val registerIndex = firstByte[1].digitToIntOrNull(16) ?: throw IllegalArgumentException("Invalid register index in instruction")
 
         println("Please enter a hexadecimal value (0-F):")
@@ -18,6 +17,8 @@ class ReadKeyboard: Instruction {
         } else {
             0
         }) as UByte
+    }
+    override fun incrementCount(cpu: Cpu) {
         cpu.incrementCount(2)
     }
 }

@@ -1,4 +1,4 @@
-034F #Sets r3 to ascii value for "X"
+034F #Sets r3 to ascii value for "O"
 0458 #Sets r4 to ascii value for "X"
 0031 #Store starting grid values in memory
 A000

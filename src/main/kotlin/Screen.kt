@@ -140,7 +140,7 @@ class Screen {
         }
     }
 
-    fun refreshDisplay(){
+    private fun refreshDisplay(){
         println("========")
         for(i in 0 until 64 step 8){
             for(j in 0 until 8){

@@ -8,7 +8,7 @@ import kotlin.system.exitProcess
 @OptIn(ExperimentalUnsignedTypes::class)
 class Cpu() {
 
-    val registers = UByteArray(8)
+    var registers = UByteArray(8)
     var programCounter:UShort = 0u
     var timer:UByte = 0u
     var address:UShort = 0u
@@ -49,8 +49,8 @@ class Cpu() {
     @OptIn(ExperimentalStdlibApi::class)
     fun executeInstruction(){
         // Gets binary from rom and converts to HexString
-        val instructionText = listOf(Computer.rom.getByte(programCounter.toInt()).toHexString(),
-                                     Computer.rom.getByte(programCounter.toInt()+1).toHexString())
+        val instructionText = listOf(Computer.getRom().getByte(programCounter.toInt()).toHexString(),
+                                     Computer.getRom().getByte(programCounter.toInt()+1).toHexString())
 
         // Terminates the program if instruction is 0000
         if(instructionText[0] == "00" &&instructionText[1] == "00") {
@@ -61,5 +61,13 @@ class Cpu() {
         val instruction = InstructionFactory().createInstruction(instructionText[0].filterNot { it.isWhitespace() }.toList()[0].toString())
 
         instruction.execute(this,instructionText[0],instructionText[1])
+    }
+    fun reset(){
+        registers = UByteArray(8)
+        programCounter = 0u
+        timer = 0u
+        address = 0u
+        memoryFlag = 0
+        var timerTicks = 0
     }
 }

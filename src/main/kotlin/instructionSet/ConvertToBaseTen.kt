@@ -1,11 +1,10 @@
 package org.example.instructionSet
-
 import org.example.Computer
 import org.example.Cpu
 
-class ConvertToBaseTen: Instruction {
+class ConvertToBaseTen: Instruction() {
     @OptIn(ExperimentalUnsignedTypes::class)
-    override fun execute(cpu: Cpu, firstByte: String, secondByte: String) {
+    override fun performOperation(cpu: Cpu, firstByte: String, secondByte: String) {
         val registerIndex = firstByte[1].digitToIntOrNull(16) ?: throw IllegalArgumentException("Invalid register index in instruction")
         val base10Number = cpu.registers[registerIndex].toInt()
 
@@ -15,10 +14,11 @@ class ConvertToBaseTen: Instruction {
 
         val addressRegisterValue = cpu.address.toInt()
 
-        Computer.ram.storeByte(addressRegisterValue,hundredsDigit.toUByte())
-        Computer.ram.storeByte(addressRegisterValue+1,tensDigit.toUByte())
-        Computer.ram.storeByte(addressRegisterValue+2,onesDigit.toUByte())
-
+        Computer.getRam().storeByte(addressRegisterValue,hundredsDigit.toUByte())
+        Computer.getRam().storeByte(addressRegisterValue+1,tensDigit.toUByte())
+        Computer.getRam().storeByte(addressRegisterValue+2,onesDigit.toUByte())
+    }
+    override fun incrementCount(cpu: Cpu) {
         cpu.incrementCount(2)
     }
 }

@@ -1,19 +1,27 @@
 package org.example
 
-object Computer {
-    var rom = Rom()
-        private set
-    var ram = Ram()
-        private set
-    var screen = Screen()
-        private set
-    var cpu = Cpu()
-        private set
+import org.example.instructionSet.InstructionFactory
 
-    fun reset(){
+object Computer {
+    private var rom = Rom()
+    private var ram = Ram()
+    private var screen = Screen()
+    val cpu = Cpu()
+
+    // Facade for resetting the computer
+    fun reset() {
         rom = Rom()
         ram = Ram()
         screen = Screen()
-        cpu = Cpu()
+        cpu.reset()
     }
+
+    fun getRom() = rom
+    fun getRam() = ram
+    fun getScreen() = screen
+}
+
+fun main() {
+    // Using the Facade to load cartridge and start execution
+    Computer.getRom().loadCartridge()
 }

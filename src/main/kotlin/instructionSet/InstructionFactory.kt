@@ -1,5 +1,4 @@
 package org.example.instructionSet
-
 import kotlin.system.exitProcess
 
 
